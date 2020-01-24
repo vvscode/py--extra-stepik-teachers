@@ -3,6 +3,8 @@ from data import provider
 
 app = Flask(__name__)
 
+app.config.from_object('config')
+
 
 @app.route('/')
 def index():
