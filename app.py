@@ -1,6 +1,9 @@
 from flask import Flask, render_template, abort, request, redirect, url_for
 from data import provider
 
+from forms.request import RequestForm
+from forms.booking import BookingForm
+
 app = Flask(__name__)
 
 app.config.from_object('config')
@@ -39,7 +42,8 @@ def search():
 
 @app.route('/request/', methods=['GET', 'POST'])
 def request_lesson():
-    if request.method == 'POST':
+    form = RequestForm()
+    if form.validate_on_submit():
         lesson_request = {
             'goal': request.form['goal'],
             'time': request.form['time'],
@@ -49,7 +53,7 @@ def request_lesson():
         provider.save_lesson_request(lesson_request)
         return render_template('request_done.j2', request=lesson_request)
 
-    return render_template('request.j2')
+    return render_template('request.j2', form=form)
 
 
 @app.route('/booking/<int:id>/<day>/<time>', methods=['GET', 'POST'])
@@ -71,7 +75,9 @@ def booking(id, day, time):
         # time is booked
         return abort(404)
 
-    if request.method == 'POST':
+    form = BookingForm(day=day, time=time)
+
+    if form.validate_on_submit():
         booking_request = {
             'teacher_id': id,
             'day': day,
@@ -84,10 +90,11 @@ def booking(id, day, time):
         return render_template('booking_done.j2', booking_request=booking_request)
 
     return render_template('booking.j2',
+                           form=form,
                            teacher=teacher,
+                           id=id,
                            day=day,
-                           time=time,
-                           id=id
+                           time=time
                            )
 
 

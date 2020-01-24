@@ -13,3 +13,11 @@
     </div>
 </div>
 {%- endmacro %}
+
+{% macro field_errors(field) %}
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <div class="invalid-feedback" style="display:block;">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+{%- endmacro %}
