@@ -12,12 +12,12 @@
         онлайн</strong></h1>
     <div class="text-center mb-5">
         <div class="btn-group mx-auto mb-0" role="group" aria-label="Basic example">
-            {%  for goal in goals.keys() %}
+            {%  for goal in goals %}
                 <a
-                        href="{{ url_for('goals', goal=goal) }}"
+                        href="{{ url_for('goals', goal=goal.goal_id) }}"
                         type="button"
                         class="btn btn-outline-secondary {{ 'active' if request.path == url_for('goals', goal=goal) else ''}}"
-                >{{ goals[goal] }}</a>
+                >{{ goal.name }}</a>
             {% endfor %}
         </div>
     </div>

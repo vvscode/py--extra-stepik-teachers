@@ -17,7 +17,7 @@
       </div>
       <hr />
       <div class="card-body mx-5">
-        <p><b>Цель занятий:</b> {{ request.goal|ru_goal }}</p>
+        <p><b>Цель занятий:</b> {{ request.goal.name }}</p>
         <p><b>Времени есть:</b> {{ request.time }} часа в неделю</p>
         <p><b>Имя:</b> {{ request.name }}</p>
         <p><b>Телефон:</b> {{ request.phone }}</p>

@@ -1,4 +1,5 @@
 {% extends "_base.j2" %}
+{% import "_macros.j2" as macros %}
 
 {% block header %}
     <title>TINYSTEPS - Booking</title>
@@ -8,6 +9,7 @@
 <div class="row mt-5">
     <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
         <form action="{{ url_for('booking', day=day, time=time, id=id) }}" class="card mb-3" method="POST">
+            {{ form.csrf_token }}
             <div class="card-body text-center pt-5">
                 <img src="{{ teacher.picture }}" class="mb-3" width="95" alt="">
                 <h2 class="h5 card-title mt-2 mb-2">{{ teacher.name }}</h2>
@@ -16,12 +18,18 @@
             </div>
             <hr/>
             <div class="card-body mx-3">
-                <input type="hidden" name="day" value="{{ day }}" />
-                <input type="hidden" name="time" value="{{ time }}" />
-                <label class="mb-1 mt-2" for="clientName">Вас зовут</label>
-                <input class="form-control" type="text" id="clientName"  name="name" placeholder="Имя" required>
-                <label class="mb-1 mt-2" for="clientPhone">Ваш телефон</label>
-                <input class="form-control" type="tel" id="clientPhone" placeholder="Телефон" required>
+                {{ form.time(type='hidden') }}
+                {{ form.day(type='hidden') }}
+
+                {{form.name.label(class="mb-1 mt-2")}}
+
+                {{ form.name.label(class="mb-1 mt-2") }}
+                {{ form.name(class_="form-control", placeholder="Имя") }}
+                {{ macros.field_errors(form.name) }}
+
+                {{ form.phone.label(class="mb-1 mt-2") }}
+                {{ form.phone(class_="form-control", placeholder="+372...") }}
+                {{ macros.field_errors(form.phone) }}
                 <input type="submit" class="btn btn-primary btn-block mt-4" name="phone" value="Записаться на пробный урок">
             </div>
         </form>
