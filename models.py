@@ -31,7 +31,7 @@ class Teacher(Base):
     teacher_id = Column(Integer, primary_key=True)
     name = Column(Text, nullable=False)
     about = Column(Text)
-    rating = Column(Numeric, nullable=False)
+    rating = Column(Text, nullable=False)
     price = Column(Integer, nullable=False)
     picture = Column(Text)
     free = Column(Text, nullable=False)
