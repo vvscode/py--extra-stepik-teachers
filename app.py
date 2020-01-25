@@ -1,12 +1,17 @@
 from flask import Flask, render_template, abort, request, redirect, url_for
-from data import provider
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
+from config import Config
+from data import provider
 from forms.request import RequestForm
 from forms.booking import BookingForm
 
 app = Flask(__name__)
+app.config.from_object(Config)
 
-app.config.from_object('config')
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 @app.route('/')
