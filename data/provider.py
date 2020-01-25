@@ -40,6 +40,7 @@ def save_lesson_request(data):
     request.phone = data["phone"]
     db.session.add(request)
     db.session.commit()
+    return request
 
 
 def save_lesson_booking(booking_request):

@@ -42,14 +42,7 @@ def search():
 def request_lesson():
     form = RequestForm()
     if form.validate_on_submit():
-        print("GOAL", request.form["goal"])
-        lesson_request = {
-            "goal": request.form["goal"],
-            "time": request.form["time"],
-            "name": request.form["name"],
-            "phone": request.form["phone"],
-        }
-        provider.save_lesson_request(lesson_request)
+        lesson_request = provider.save_lesson_request(request.form)
         return render_template("request_done.j2", request=lesson_request)
 
     return render_template("request.j2", form=form)

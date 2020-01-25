@@ -8,7 +8,6 @@ from data import provider
 class RequestForm(FlaskForm):
     goals = provider.get_goals()
     choices = list(map(lambda goal: (goal.goal_id, goal.name), goals))
-    print("choices", choices)
     goal = RadioField(
         "Какая цель занятий?",
         validators=[InputRequired()],
