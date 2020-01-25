@@ -1,9 +1,11 @@
 from app import app
 from data import provider
 
+
 @app.template_filter()
 def ru_goal(goal):
-    return provider.get_goals().get(goal, 'uknown goal')
+    return goal.name
+
 
 @app.template_filter()
 def ru_week_day(day):

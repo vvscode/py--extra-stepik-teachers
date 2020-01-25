@@ -1,3 +1,4 @@
+import json
 from sqlalchemy import Column, ForeignKey, Integer, Numeric, Table, Text
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
@@ -22,7 +23,6 @@ class Goal(Base):
 
     goal_id = Column(Integer, primary_key=True)
     name = Column(Text, nullable=False)
-    teachers = relationship("Teacher", secondary=teachers_to_goals)
 
 
 class Teacher(Base):
@@ -34,8 +34,19 @@ class Teacher(Base):
     rating = Column(Text, nullable=False)
     price = Column(Integer, nullable=False)
     picture = Column(Text)
-    free = Column(Text, nullable=False)
-    goals = relationship("Goal", secondary=teachers_to_goals)
+    _free = Column('free', Text, nullable=False)
+    goals = relationship(
+        "Goal", secondary=teachers_to_goals, backref='teachers')
+
+    @property
+    def free(self):
+        if not self._free:
+            return {}
+        return json.loads(self._free)
+
+    @free.setter
+    def config(self, value):
+        self._free = json.dumps(value)
 
 
 class Booking(Base):

@@ -18,7 +18,7 @@ def index():
 def goals(goal):
     return render_template(
         "goal.j2",
-        title=provider.get_goals().get(goal, "Uknown goal"),
+        title=provider.get_goal(goal).name,
         teachers=provider.get_teachers(goal=goal),
     )
 

@@ -9,11 +9,16 @@ def get_goals():
     return models.Goal.query.all()
 
 
+def get_goal(id):
+    return models.Goal.query.get(id)
+
+
 def get_teachers(goal=None):
     query = models.Teacher.query
 
     if goal:
-        query = query.filter(goal in model.Teacher.goals)
+        query = query.filter(models.Teacher.goals.any(
+            models.Goal.goal_id == goal))
 
     return query.all()
 
@@ -24,7 +29,7 @@ def save_teachers(teachers):
 
 
 def get_teacher(id):
-    return models.Teacher.get(id)
+    return models.Teacher.query.get(id)
 
 
 def save_lesson_request(data):
