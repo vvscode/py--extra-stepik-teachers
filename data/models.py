@@ -40,7 +40,15 @@ class Teacher(Base):
     def free(self):
         if not self._free:
             return {}
-        return json.loads(self._free)
+
+        # Checked DB manually - I have there normal serialized json
+        # For some reason here I get serialized it twice
+        # Waste an hour for this strange glitch
+        ret = self._free
+        while type(ret) == str:
+            ret = json.loads(ret)
+
+        return ret
 
     @free.setter
     def free(self, value):

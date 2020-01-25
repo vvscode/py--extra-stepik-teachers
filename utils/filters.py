@@ -3,11 +3,6 @@ from data import provider
 
 
 @app.template_filter()
-def ru_goal(goal):
-    return goal.name
-
-
-@app.template_filter()
 def ru_week_day(day):
     week = {
         "mon": "Понедельник",
