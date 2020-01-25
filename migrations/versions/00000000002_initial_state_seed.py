@@ -9,7 +9,7 @@ import json
 import os
 
 from app import db
-from models import Teacher, Goal
+from data.models import Teacher, Goal
 
 # revision identifiers, used by Alembic.
 revision = "00000000002"

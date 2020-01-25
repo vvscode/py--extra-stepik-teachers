@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField
 from wtforms.validators import InputRequired, Regexp, ValidationError
 
-from .data import provider
+from data import provider
 
 
 class RequestForm(FlaskForm):
