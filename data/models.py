@@ -12,8 +12,7 @@ metadata = Base.metadata
 teachers_to_goals = Table(
     "teachers_to_goals",
     Base.metadata,
-    Column("teachers", Integer, ForeignKey(
-        "teachers.teacher_id", ondelete="CASCADE")),
+    Column("teachers", Integer, ForeignKey("teachers.teacher_id", ondelete="CASCADE")),
     Column("goals", Integer, ForeignKey("goals.goal_id", ondelete="CASCADE")),
 )
 
@@ -34,9 +33,8 @@ class Teacher(Base):
     rating = Column(Text, nullable=False)
     price = Column(Integer, nullable=False)
     picture = Column(Text)
-    _free = Column('free', Text, nullable=False)
-    goals = relationship(
-        "Goal", secondary=teachers_to_goals, backref='teachers')
+    _free = Column("free", Text, nullable=False)
+    goals = relationship("Goal", secondary=teachers_to_goals, backref="teachers")
 
     @property
     def free(self):

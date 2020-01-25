@@ -42,7 +42,7 @@ def search():
 def request_lesson():
     form = RequestForm()
     if form.validate_on_submit():
-        print('GOAL', request.form["goal"])
+        print("GOAL", request.form["goal"])
         lesson_request = {
             "goal": request.form["goal"],
             "time": request.form["time"],
