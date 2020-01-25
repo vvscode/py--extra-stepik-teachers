@@ -2,18 +2,24 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField
 from wtforms.validators import InputRequired, Regexp, ValidationError
 
-from data import provider
+from .data import provider
 
 
 class RequestForm(FlaskForm):
-    goals = provider.get_goals()
-    choices = list(map(lambda goal: (goal.goal_id, goal.name), goals))
+    def __init__(self, *args, **kwargs):
+        super(RequestForm, self).__init__(*args, **kwargs)
+        init_goal()
+
+    def init_goal(self):
+        goals = provider.get_goals()
+        choices = list(map(lambda goal: (goal.goal_id, goal.name), goals))
+        self.goal.choices = choices
+        self.goal.default = goals[-1].goal_id
+
     goal = RadioField(
         "Какая цель занятий?",
         validators=[InputRequired()],
-        choices=choices,
         coerce=int,
-        default=goals[-1].goal_id,
     )
 
     time = RadioField(
