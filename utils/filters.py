@@ -4,7 +4,7 @@ from data import provider
 
 @app.template_filter()
 def ru_goal(goal):
-    return goal.name
+    return goal if type(goal) == str else goal.name
 
 
 @app.template_filter()

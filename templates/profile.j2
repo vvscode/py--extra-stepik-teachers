@@ -42,7 +42,7 @@
                     <td><span class="btn">{{ time }}</span></td>
                     {% for day in teacher.free.keys() %}
                         <td>
-                        {%  if teacher['free'][day][time] %}
+                        {%  if teacher.free[day][time] %}
                             <a href="{{ url_for('booking', id=teacher.teacher_id, day=day, time=time) }}"
                                class="btn btn-sm btn-success">
                                 {{ time }}

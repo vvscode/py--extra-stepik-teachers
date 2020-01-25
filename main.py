@@ -42,6 +42,7 @@ def search():
 def request_lesson():
     form = RequestForm()
     if form.validate_on_submit():
+        print('GOAL', request.form["goal"])
         lesson_request = {
             "goal": request.form["goal"],
             "time": request.form["time"],
@@ -61,15 +62,15 @@ def booking(id, day, time):
     if not teacher:
         return abort(404)
 
-    if day not in teacher["free"]:
+    if day not in teacher.free:
         # incorrect day input
         return abort(404)
 
-    if time not in teacher["free"][day]:
+    if time not in teacher.free[day]:
         # incorrect time input
         return abort(404)
 
-    if not teacher["free"][day][time]:
+    if not teacher.free[day][time]:
         # time is booked
         return abort(404)
 

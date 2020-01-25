@@ -45,7 +45,7 @@ class Teacher(Base):
         return json.loads(self._free)
 
     @free.setter
-    def config(self, value):
+    def free(self, value):
         self._free = json.dumps(value)
 
 

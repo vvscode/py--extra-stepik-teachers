@@ -33,28 +33,31 @@ def get_teacher(id):
 
 
 def save_lesson_request(data):
-    print('data', data)
-    try:
-        with open(f'{data_dir}/requests.json') as file:
-            list = json.loads(file.read())
-    except OSError:
-        list = []
-    except json.decoder.JSONDecodeError:
-        list = []
+    request = models.Request()
 
-    list.append(data)
-
-    with open(f'{data_dir}/requests.json', 'w') as file:
-        file.write(json.dumps(list))
+    request.goal_id = data['goal']
+    request.time = data['time']
+    request.name = data['name']
+    request.phone = data['phone']
+    db.session.add(request)
+    db.session.commit()
 
 
 def save_lesson_booking(booking_request):
-    save_lesson_request(booking_request)
+    teacher = get_teacher(booking_request['teacher_id'])
 
-    teachers = get_teachers()
-    for teacher in teachers:
-        if teacher['id'] == booking_request['teacher_id']:
-            teacher['free'][booking_request['day']
-                            ][booking_request['time']] = False
+    booking = models.Booking(teacher=teacher)
+    booking.time = booking_request['time']
+    booking.day = booking_request['day']
+    booking.name = booking_request['name']
+    booking.phone = booking_request['phone']
+    db.session.add(booking)
 
-    save_teachers(teachers)
+    # trick with setters
+    free = teacher.free
+    free[booking_request['day']][booking_request['time']] = False
+    teacher.free = free
+
+    # https://stackoverflow.com/questions/4201455/sqlalchemy-whats-the-difference-between-flush-and-commit
+    db.session.flush()
+    db.session.commit()
